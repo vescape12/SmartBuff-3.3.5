@@ -10,6 +10,7 @@
   <Script file="localization.cn.lua"/>
   <Script file="SmartBuff.buffs.lua"/>
 	<Script file="SmartBuff.lua"/>
+  <Script file="SmartBuff.blessings.lua"/>
   
   <Frame name="SmartBuffFrame">
     <Scripts>

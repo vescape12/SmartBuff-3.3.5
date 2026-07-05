@@ -1626,7 +1626,8 @@ function SMARTBUFF_Check(mode, force)
           if (cBuffs[i].BuffG and B[CS()] and B[CS()][ct] and B[CS()][ct][cBuffs[i].BuffS].EnableG and cBuffs[i].IDG ~= nil
             and ((isCombat and B[CS()][ct][cBuffs[i].BuffS].CIn) or (not isCombat and B[CS()][ct][cBuffs[i].BuffS].COut))
             and UnitMana("player") >= B[CS()][ct][cBuffs[i].BuffS].ManaLimit
-            and (sPlayerClass ~= "PALADIN" or not cClassGroups or (sPlayerClass == "PALADIN" and (B[CS()][ct][cBuffs[i].BuffS][subgroup] or (type(subgroup) == "number" and subgroup == 0))))) then
+            and (sPlayerClass ~= "PALADIN" or not cClassGroups or (sPlayerClass == "PALADIN" and (B[CS()][ct][cBuffs[i].BuffS][subgroup] or (type(subgroup) == "number" and subgroup == 0))))
+            and not SmartBuff_Blessing_GroupHasOverride(cBuffs[i].BuffS, units)) then
            
               local tmpUnits = { };
               local buffnS = cBuffs[i].BuffS;
@@ -2028,6 +2029,14 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
               or (wpet and (unitCreatureTypeIsDemon or (unitCreatureTypeIsElemental)))))
 			  or (buffTypeIsNotGroup and SMARTBUFF_IsPlayer(unit))
               or isInAddList);
+
+			-- Per-player Blessing override (Paladin only): if this person has chosen a
+			-- specific Blessing via the SmartBuff right-click menu, that choice wins
+			-- over the normal class-based checkbox logic for Blessing spells.
+			local blessingOverride = SmartBuff_Blessing_Override(buffnS, unit);
+			if (blessingOverride ~= nil) then
+			  test = blessingOverride and unitCreatureTypeIsHumanoid and not isInIgnoreList;
+			end
 			
 			--test = true -- will buff if true
 

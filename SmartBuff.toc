@@ -11,6 +11,7 @@
 ## LoadOnDemand: 0
 ## OptionalDeps: Titan, FuBar
 ## SavedVariablesPerCharacter: SMARTBUFF_Options, SMARTBUFF_Buffs
+## SavedVariables: SmartBuffBlessingPrefs
 
 SmartBuff.xml
 SmartBuffTitan.xml
