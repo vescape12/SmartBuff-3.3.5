@@ -17,6 +17,15 @@ local SMARTBUFF_BLESSING_LABELS = {
   BOK = "Blessing of Kings",
 };
 
+-- SmartBuff's core code repurposes its own "sPlayerClass" variable into the
+-- literal string "HERO" for every class (it uses one merged spell list and
+-- lets the spellbook filter it). That means "sPlayerClass == PALADIN" is
+-- never true for anyone, so we check the player's real class directly here.
+local function SmartBuff_Blessing_IsPaladin()
+  local _, realClass = UnitClass("player");
+  return realClass == "PALADIN";
+end
+
 -- Localized-spell-name -> short key ("BOW"/"BOM"/"BOK"). Built lazily since
 -- SMARTBUFF_BOW etc. are only populated once SMARTBUFF_InitItemList() runs.
 local smartBuffBlessingKeyByName = nil;
@@ -81,7 +90,7 @@ end
 --   true  -> force this Blessing to be cast on this unit
 --   false -> force this Blessing to be skipped on this unit
 function SmartBuff_Blessing_Override(buffName, unit)
-  if (sPlayerClass ~= "PALADIN") then return nil; end
+  if (not SmartBuff_Blessing_IsPaladin()) then return nil; end
 
   local blessKey = SmartBuff_Blessing_KeyForSpell(buffName);
   if (not blessKey) then return nil; end
@@ -99,7 +108,7 @@ end
 -- (which honors the override above) handle everyone in that group instead -
 -- otherwise the group-wide cast would overwrite a manual choice.
 function SmartBuff_Blessing_GroupHasOverride(buffName, units)
-  if (sPlayerClass ~= "PALADIN" or not units) then return false; end
+  if (not SmartBuff_Blessing_IsPaladin() or not units) then return false; end
 
   local blessKey = SmartBuff_Blessing_KeyForSpell(buffName);
   if (not blessKey) then return false; end
@@ -134,7 +143,7 @@ local smartBuffOrigUnitPopupShowMenu = UnitPopup_ShowMenu;
 UnitPopup_ShowMenu = function(dropdownMenu, which, unit, name, userData)
   local inserted = false;
 
-  if (sPlayerClass == "PALADIN" and SMARTBUFF_BLESSING_MENU_TYPES[which] and unit
+  if (SmartBuff_Blessing_IsPaladin() and SMARTBUFF_BLESSING_MENU_TYPES[which] and unit
     and UnitIsPlayer(unit) and UnitIsFriend("player", unit)) then
     local menu = UnitPopupMenus[which];
     if (menu) then
