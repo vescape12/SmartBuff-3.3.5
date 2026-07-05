@@ -68,14 +68,14 @@ SMARTBUFF_OFT                = "SmartBuff On/Off";
 SMARTBUFF_OFT_MENU           = "Show/hide options menu";
 SMARTBUFF_OFT_AUTO           = "Reminder";
 SMARTBUFF_OFT_AUTOTIMER      = "Check timer";
-SMARTBUFF_OFT_AUTOCOMBAT     = "in combat";
+SMARTBUFF_OFT_AUTOCOMBAT     = "In combat";
 SMARTBUFF_OFT_AUTOCHAT       = "Chat";
 SMARTBUFF_OFT_AUTOSPLASH     = "Splash";
 SMARTBUFF_OFT_AUTOSOUND      = "Sound";
 SMARTBUFF_OFT_AUTOREST       = "Disable in cities";
 SMARTBUFF_OFT_HUNTERPETS     = "Buff Hunter pets";
 SMARTBUFF_OFT_WARLOCKPETS    = "Buff Warlock pets";
-SMARTBUFF_OFT_ARULES         = "Advance rules";
+SMARTBUFF_OFT_ARULES         = "Advanced rules";
 SMARTBUFF_OFT_GRP            = "Raid Subgroups to buff";
 SMARTBUFF_OFT_SUBGRPCHANGED  = "Open options menu";
 SMARTBUFF_OFT_BUFFS          = "Buffs/Abilities";
@@ -85,17 +85,17 @@ SMARTBUFF_OFT_APPLY          = "Apply";
 SMARTBUFF_OFT_GRPBUFFSIZE    = "Grp/Raid size";
 SMARTBUFF_OFT_CLASSBUFFSIZE  = "Class size";
 SMARTBUFF_OFT_MESSAGES       = "Disable messages";
-SMARTBUFF_OFT_MSGNORMAL      = "normal";
-SMARTBUFF_OFT_MSGWARNING     = "warning";
-SMARTBUFF_OFT_MSGERROR       = "error";
+SMARTBUFF_OFT_MSGNORMAL      = "Normal";
+SMARTBUFF_OFT_MSGWARNING     = "Warning";
+SMARTBUFF_OFT_MSGERROR       = "Error";
 SMARTBUFF_OFT_HIDEMMBUTTON   = "Hide minimap button";
 SMARTBUFF_OFT_REBUFFTIMER    = "Rebuff Timer";
 SMARTBUFF_OFT_AUTOSWITCHTMP  = "Switch template";
 SMARTBUFF_OFT_SELFFIRST      = "Self first";
 SMARTBUFF_OFT_SCROLLWHEEL    = "Buff on scroll";
 SMARTBUFF_OFT_SCROLLWHEELUP  = "Buff on scrollwheel up";
-SMARTBUFF_OFT_SCROLLWHEELDOWN= "down";
-SMARTBUFF_OFT_TARGETSWITCH   = "target change";
+SMARTBUFF_OFT_SCROLLWHEELDOWN= "Down";
+SMARTBUFF_OFT_TARGETSWITCH   = "Target change";
 SMARTBUFF_OFT_BUFFTARGET     = "Buff target";
 SMARTBUFF_OFT_BUFFPVP        = "Buff PvP";
 SMARTBUFF_OFT_AUTOSWITCHTMPINST = "Instances";
@@ -110,7 +110,7 @@ SMARTBUFF_OFT_COMPMODE       = "Comp. mode";
 SMARTBUFF_OFT_MINIGRP        = "Mini group";
 SMARTBUFF_OFT_ANTIDAZE       = "Anti daze";
 SMARTBUFF_OFT_HIDESABUTTON   = "Hide action button";
-SMARTBUFF_OFT_INCOMBAT       = "in combat";
+SMARTBUFF_OFT_INCOMBAT       = "In combat";
 SMARTBUFF_OFT_SMARTDEBUFF    = "SmartDebuff";
 SMARTBUFF_OFT_INSHAPESHIFT   = "Shapeshift";
 
@@ -126,8 +126,8 @@ SMARTBUFF_OFTT_AUTOREST      = "Disable reminder in capital cities";
 SMARTBUFF_OFTT_HUNTERPETS    = "Buff the Hunter pets as well.";
 SMARTBUFF_OFTT_WARLOCKPETS   = "Buff the Warlock pets as well, except the " .. SMARTBUFF_DEMONTYPE .. ".";
 SMARTBUFF_OFTT_ARULES        = "Does not cast:\n- Thorns on Mages, Priests and Warlocks\n- Arcane Intellect on units without Mana\n- Divine Spirit on units without Mana";
-SMARTBUFF_OFTT_SUBGRPCHANGED = "Automatically opens the SmartBuff options menu,\nwhen you have changed the subgroup.";
-SMARTBUFF_OFTT_GRPBUFFSIZE   = "How many players missing the groupbuff and have to be in\nthe group/raid, that the groupbuff will be casted.";
+SMARTBUFF_OFTT_SUBGRPCHANGED = "Automatically opens the SmartBuff options menu\nwhen you change subgroups.";
+SMARTBUFF_OFTT_GRPBUFFSIZE   = "How many players must be missing the group buff\nand present in the group/raid before the group\nbuff will be cast.";
 SMARTBUFF_OFTT_HIDEMMBUTTON  = "Hides the SmartBuff minimap button.";
 SMARTBUFF_OFTT_REBUFFTIMER   = "How many seconds before a buff expires,\nthe reminder should alert you.\n0 = Deactivated";
 SMARTBUFF_OFTT_SELFFIRST     = "Buffs your character first of all others.";
@@ -140,18 +140,18 @@ SMARTBUFF_OFTT_AUTOSWITCHTMP = "Automatically switches the template,\nif the gro
 SMARTBUFF_OFTT_AUTOSWITCHTMPINST = "Automatically switches the template,\nif the instance changes.";
 SMARTBUFF_OFTT_CHECKCHARGES  = "Displays low amount of\ncharges on a buff.\n0 = Deactivated";
 SMARTBUFF_OFTT_BUFFINCITIES  = "Buffs also if you are in capital cities.\nIf you are PvP flagged, it buffs in any case.";
-SMARTBUFF_OFTT_UISYNC        = "Activate syncronisation with the UI\nto retrive the timeleft of your buffs\nfrom other players.";
-SMARTBUFF_OFTT_ADVGRPBUFFCHECK = "The advanced group buff check is also looking\non single buffs on the group buff check.";
-SMARTBUFF_OFTT_ADVGRPBUFFRANGE = "The advanced group range check is also looking\nif each player in group is in range.";
-SMARTBUFF_OFTT_BLDURATION    = "How many seconds, players will be blacklistet.\n0 = Deactivated";
-SMARTBUFF_OFTT_COMPMODE      = "Compatibility mode\nAttention!!!\nUses this mode only, if you are\nfacing problems to cast buffs on yourself.";
-SMARTBUFF_OFTT_MINIGRP       = "Show raid subgoup settings in an\nown movable mini group frame.";
+SMARTBUFF_OFTT_UISYNC        = "Activate synchronization with the UI\nto retrieve the time left on buffs\nfrom other players.";
+SMARTBUFF_OFTT_ADVGRPBUFFCHECK = "The advanced group buff check also looks\nat individual buffs during the group buff check.";
+SMARTBUFF_OFTT_ADVGRPBUFFRANGE = "The advanced group range check also checks\nwhether each player in the group is in range.";
+SMARTBUFF_OFTT_BLDURATION    = "How many seconds players will be blacklisted.\n0 = Deactivated";
+SMARTBUFF_OFTT_COMPMODE      = "Compatibility mode\nAttention!\nUse this mode only if you are\nhaving problems casting buffs on yourself.";
+SMARTBUFF_OFTT_MINIGRP       = "Show raid subgroup settings in an\nown movable mini group frame.";
 SMARTBUFF_OFTT_ANTIDAZE      = "Automatically cancels the\naspect of the cheetah/pack\nif someone gets dazed\n(self or group).";
 SMARTBUFF_OFTT_SPLASHSTYLE   = "Changes the fontstyle of\nthe buff messages.";
 SMARTBUFF_OFTT_HIDESABUTTON  = "Hides the SmartBuff action button.";
-SMARTBUFF_OFTT_INCOMBAT      = "At the moment it only works on yourself.\nThe first buff you mark as in combat,\nwill set on the button before combat\nand you can use it in combat.\nWarning! All logic is disabled in combat!";
+SMARTBUFF_OFTT_INCOMBAT      = "At the moment it only works on yourself.\nThe first buff you mark as in combat\nwill be set on the button before combat,\nand you can use it in combat.\nWarning! All logic is disabled in combat!";
 SMARTBUFF_OFTT_SMARTDEBUFF   = "Shows the SmartDebuff frame.";
-SMARTBUFF_OFTT_SPLASHDURATION= "How many seconds the splash\nmessage will displayed,\nbefore it fades.";
+SMARTBUFF_OFTT_SPLASHDURATION= "How many seconds the splash\nmessage will be displayed\nbefore it fades.";
 SMARTBUFF_OFTT_INSHAPESHIFT  = "Cast buffs also if you\nare shapeshifted.";
 
 -- Buffsetup Frame Text
@@ -161,7 +161,7 @@ SMARTBUFF_BST_COMBATIN       = "In combat";
 SMARTBUFF_BST_COMBATOUT      = "Out of combat";
 SMARTBUFF_BST_MAINHAND       = "Main Hand";
 SMARTBUFF_BST_OFFHAND        = "Off Hand";
-SMARTBUFF_BST_RANGED        = "Ranged Hand";
+SMARTBUFF_BST_RANGED        = "Ranged";
 SMARTBUFF_BST_REMINDER       = "Notification";
 SMARTBUFF_BST_MANALIMIT      = "Lower bound";
 
@@ -172,7 +172,7 @@ SMARTBUFF_BSTT_COMBATIN      = "Buffs if you are in combat.";
 SMARTBUFF_BSTT_COMBATOUT     = "Buffs if you are out of combat.";
 SMARTBUFF_BSTT_MAINHAND      = "Buffs the Main Hand.";
 SMARTBUFF_BSTT_OFFHAND       = "Buffs the Off Hand.";
-SMARTBUFF_BSTT_RANGED       = "Buffs the Ranged Hand.";
+SMARTBUFF_BSTT_RANGED       = "Buffs the ranged weapon.";
 SMARTBUFF_BSTT_REMINDER      = "Display reminder message.";
 SMARTBUFF_BSTT_REBUFFTIMER   = "How many seconds before a buff expires,\nthe reminder should alert you.\n0 = global rebuff timer";
 SMARTBUFF_BSTT_MANALIMIT     = "Mana/Rage/Energy threshold\nIf you are below this value\nit will not cast the buff.";
@@ -191,11 +191,11 @@ SMARTBUFF_MSG_OOR            = "is out of range to buff!";
 SMARTBUFF_MSG_CD             = "Global cooldown!";
 SMARTBUFF_MSG_CHAT           = "not possible in chat mode!";
 SMARTBUFF_MSG_SHAPESHIFT     = "Casting is not allowed in shapeshift form!";
-SMARTBUFF_MSG_NOACTIONSLOT   = "needs a slot in an actionbar to working properly!";
+SMARTBUFF_MSG_NOACTIONSLOT   = "needs a slot on an action bar to work properly!";
 SMARTBUFF_MSG_GROUP          = "Group";
 SMARTBUFF_MSG_NEEDS          = "needs";
 SMARTBUFF_MSG_OOM            = "Not enough mana/rage/energy!";
-SMARTBUFF_MSG_STOCK          = "Actual stock of";
+SMARTBUFF_MSG_STOCK          = "Current stock of";
 SMARTBUFF_MSG_NOREAGENT      = "Out of reagent:";
 SMARTBUFF_MSG_DEACTIVATED    = "deactivated!";
 SMARTBUFF_MSG_REBUFF         = "Rebuff";
@@ -213,16 +213,15 @@ SMARTBUFF_DEBUFF_TT          = "Shift-Left drag: Move frame\n|cff20d2ff- S butto
 
 
 -- Code table
--- à : \195\160    è : \195\168    ì : \195\172    ò : \195\178    ù : \195\185
--- á : \195\161    é : \195\169    í : \195\173    ó : \195\179    ú : \195\186
--- â : \195\162    ê : \195\170    î : \195\174    ô : \195\180    û : \195\187
--- ã : \195\163    ë : \195\171    ï : \195\175    õ : \195\181    ü : \195\188
--- ä : \195\164                    ñ : \195\177    ö : \195\182
--- æ : \195\166                                    ø : \195\184
--- ç : \195\167                                    œ : \197\147
+-- ï¿½ : \195\160    ï¿½ : \195\168    ï¿½ : \195\172    ï¿½ : \195\178    ï¿½ : \195\185
+-- ï¿½ : \195\161    ï¿½ : \195\169    ï¿½ : \195\173    ï¿½ : \195\179    ï¿½ : \195\186
+-- ï¿½ : \195\162    ï¿½ : \195\170    ï¿½ : \195\174    ï¿½ : \195\180    ï¿½ : \195\187
+-- ï¿½ : \195\163    ï¿½ : \195\171    ï¿½ : \195\175    ï¿½ : \195\181    ï¿½ : \195\188
+-- ï¿½ : \195\164                    ï¿½ : \195\177    ï¿½ : \195\182
+-- ï¿½ : \195\166                                    ï¿½ : \195\184
+-- ï¿½ : \195\167                                    ï¿½ : \197\147
 -- 
--- Ä : \195\132
--- Ö : \195\150
--- Ü : \195\156
--- ß : \195\159
-
+-- ï¿½ : \195\132
+-- ï¿½ : \195\150
+-- ï¿½ : \195\156
+-- ï¿½ : \195\159
