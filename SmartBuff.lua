@@ -460,7 +460,10 @@ function SMARTBUFF_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5)
     SMARTBUFF_AddMsgD("Spell failed: " .. arg1);
     if (currentUnit and (string.find(currentUnit, "party") or string.find(currentUnit, "raid") or (currentUnit == "target" and O.Debug))) then
       if (UnitName(currentUnit) ~= sPlayerName and O.BlacklistTimer > 0) then
-        cBlacklist[currentUnit] = GetTime();
+        local blName = UnitName(currentUnit);
+        if (blName) then
+          cBlacklist[blName] = GetTime();
+        end
         if (currentUnit and UnitName(currentUnit)) then
           SMARTBUFF_AddMsgWarn(UnitName(currentUnit) .. " (" .. currentUnit .. ") blacklisted (" .. O.BlacklistTimer .. "sec)");
         end
@@ -499,11 +502,12 @@ function SMARTBUFF_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5)
       
       if (unit) then
         local name = UnitName(unit);
-        if (cBuffTimer[unit] == nil) then
-          cBuffTimer[unit] = { };
+        local tkey = name or unit;
+        if (cBuffTimer[tkey] == nil) then
+          cBuffTimer[tkey] = { };
         end
         --if (not SMARTBUFF_IsPlayer(unit)) then
-          cBuffTimer[unit][spell] = GetTime();
+          cBuffTimer[tkey][spell] = GetTime();
         --end
         if (name ~= nil) then 
           SMARTBUFF_AddMsg(name .. ": " .. spell .. " " .. SMARTBUFF_MSG_BUFFED);
@@ -1223,8 +1227,9 @@ function SMARTBUFF_CheckUnitBuffTimers(unit)
       fd = SMARTBUFF_IsFeignDeath(unit);
     end 
     if (not fd) then
-      if (cBuffTimer[unit]) then
-        cBuffTimer[unit] = nil;
+      local tkey = UnitName(unit) or unit;
+      if (cBuffTimer[tkey]) then
+        cBuffTimer[tkey] = nil;
         SMARTBUFF_AddMsgD(UnitName(unit) .. ": unit timer reseted");
       end
       if (cBuffTimer[uc]) then
@@ -1300,7 +1305,7 @@ function SMARTBUFF_ResetBuffTimers()
               and uc and B[CS()][ct][buffS][uc]) then
               d = cBuffs[i].DurationS;
               buff = buffS;
-              obj = unit;
+              obj = UnitName(unit) or unit;
             end
             
             if (d > 0 and buff) then
@@ -1442,7 +1447,7 @@ function SMARTBUFF_SyncBuffTimers()
             if (buffS and B[CS()][ct][buffS].EnableS and cBuffs[i].IDS ~= nil and cBuffs[i].DurationS > 0) then
               --and uc and B[CS()][ct][buffS][uc]) then
               --SMARTBUFF_AddMsgD("Buff timer sync check: " .. buffS);
-              SMARTBUFF_SyncBuffTimer(unit, unit, buffS, cBuffs[i].DurationS);
+              SMARTBUFF_SyncBuffTimer(unit, UnitName(unit) or unit, buffS, cBuffs[i].DurationS);
             end
             
             i = i + 1;
@@ -1775,8 +1780,9 @@ function SMARTBUFF_Check(mode, force)
                         
                         -- cleanup single buff timer
                         for _, unit in pairs(tmpUnits) do
-                          if (cBuffTimer[unit] and cBuffTimer[unit][cBuffs[i].BuffS]) then
-                            cBuffTimer[unit][cBuffs[i].BuffS] = nil;
+                          local tkey = UnitName(unit) or unit;
+                          if (cBuffTimer[tkey] and cBuffTimer[tkey][cBuffs[i].BuffS]) then
+                            cBuffTimer[tkey][cBuffs[i].BuffS] = nil;
                           end
                         end
                         
@@ -1870,7 +1876,7 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
   --SMARTBUFF_AddMsgD("Checking " .. unit);
   
   if (UnitExists(unit) and UnitIsFriend("player", unit) and not UnitIsDeadOrGhost(unit) and not UnitIsCorpse(unit)
-    and UnitIsConnected(unit) and UnitIsVisible(unit) and not UnitOnTaxi(unit) and not cBlacklist[unit]
+    and UnitIsConnected(unit) and UnitIsVisible(unit) and not UnitOnTaxi(unit) and not cBlacklist[UnitName(unit)]
     and ((UnitIsPVP(unit) == nil and (not isPvP or O.BuffPvP)) or (UnitIsPVP(unit) and (isPvP or O.BuffPvP)))) then
     --and not SmartBuff_UnitIsIgnored(unit)
     
@@ -2170,12 +2176,13 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
               -- Normal buff ------------------------------------------------------------------------
               else
                 local index = nil;
+                local tkey = UnitName(unit) or unit;
                 
                 -- cleanup single timer, if a group buff exists
                 if (unit ~= "target" and cBuffs[i].IDG ~= nil) then
                   buff, index, buffname = SMARTBUFF_CheckUnitBuffs(unit, nil, cBuffs[i].BuffG);
-                  if (buff == nil and cBuffTimer[unit] ~= nil and cBuffTimer[unit][buffnS] ~= nil) then
-                    cBuffTimer[unit][buffnS] = nil;
+                  if (buff == nil and cBuffTimer[tkey] ~= nil and cBuffTimer[tkey][buffnS] ~= nil) then
+                    cBuffTimer[tkey][buffnS] = nil;
                     --SMARTBUFF_AddMsgD(un .. " (S): " .. buffnS .. " timer reset");
                   end                 
                 end
@@ -2188,8 +2195,8 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                 if (unit ~= "target" and buff == nil and cBuffs[i].DurationS >= 1 and rbTime > 0) then
                   if (SMARTBUFF_IsPlayer(unit)) then
                     --bt = GetPlayerBuffTimeLeft(index);
-                    if (cBuffTimer[unit] ~= nil and cBuffTimer[unit][buffnS] ~= nil) then
-                      local tbt = cBuffs[i].DurationS - (time - cBuffTimer[unit][buffnS]);
+                    if (cBuffTimer[tkey] ~= nil and cBuffTimer[tkey][buffnS] ~= nil) then
+                      local tbt = cBuffs[i].DurationS - (time - cBuffTimer[tkey][buffnS]);
                       if (not bt or bt - tbt > rbTime) then
                         bt = tbt;
                       end
@@ -2200,8 +2207,8 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                     --if (charges > 1) then cBuffs[i].CanCharge = true; end
                     bufftarget = nil;
                     --SMARTBUFF_AddMsgD(un .. " (P): " .. index .. ". " .. GetPlayerBuffTexture(index) .. "(" .. charges .. ") - " .. buffnS .. string.format(" %.0f sec left", bt));
-                  elseif (cBuffTimer[unit] ~= nil and cBuffTimer[unit][buffnS] ~= nil) then
-                    bt = cBuffs[i].DurationS - (time - cBuffTimer[unit][buffnS]);
+                  elseif (cBuffTimer[tkey] ~= nil and cBuffTimer[tkey][buffnS] ~= nil) then
+                    bt = cBuffs[i].DurationS - (time - cBuffTimer[tkey][buffnS]);
                     bufftarget = nil;
                     --SMARTBUFF_AddMsgD(un .. " (S): " .. buffnS .. string.format(" %.0f sec left", bt));
                   elseif (cBuffs[i].BuffG ~= nil and cBuffTimer[subgroup] ~= nil and cBuffTimer[subgroup][cBuffs[i].BuffG] ~= nil) then
@@ -2322,8 +2329,9 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                     -- clean up buff timer, if expired
                     if (bt and bt < 0 and (bExpire or bExpireOh)) then 
                       bt = 0;
-                      if (cBuffTimer[unit] ~= nil and cBuffTimer[unit][buffnS] ~= nil) then
-                        cBuffTimer[unit][buffnS] = nil;
+                      local tkey = UnitName(unit) or unit;
+                      if (cBuffTimer[tkey] ~= nil and cBuffTimer[tkey][buffnS] ~= nil) then
+                        cBuffTimer[tkey][buffnS] = nil;
                         --SMARTBUFF_AddMsgD(un .. " (S): " .. buffnS .. " timer reset");
                       end
                       if (cBuffs[i].IDG ~= nil) then
