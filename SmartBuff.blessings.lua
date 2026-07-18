@@ -142,8 +142,15 @@ local SMARTBUFF_BLESSING_MENU_TYPES = {
 local smartBuffOrigUnitPopupShowMenu = UnitPopup_ShowMenu;
 UnitPopup_ShowMenu = function(dropdownMenu, which, unit, name, userData)
   local inserted = false;
+  local isPal = SmartBuff_Blessing_IsPaladin();
 
-  if (SmartBuff_Blessing_IsPaladin() and SMARTBUFF_BLESSING_MENU_TYPES[which] and unit
+  if (isPal) then
+    SMARTBUFF_AddMsgD("SmartBuff blessing menu: which=" .. tostring(which) .. " unit=" .. tostring(unit)
+      .. " isPlayer=" .. tostring(unit and UnitIsPlayer(unit))
+      .. " isFriend=" .. tostring(unit and UnitIsFriend("player", unit)));
+  end
+
+  if (isPal and SMARTBUFF_BLESSING_MENU_TYPES[which] and unit
     and UnitIsPlayer(unit) and UnitIsFriend("player", unit)) then
     local menu = UnitPopupMenus[which];
     if (menu) then
@@ -172,7 +179,7 @@ UnitPopup_OnClick = function(self, ...)
   local button = self and self.value;
 
   if (button == "SMARTBUFF_BOW" or button == "SMARTBUFF_BOM" or button == "SMARTBUFF_BOK" or button == "SMARTBUFF_DEFAULT") then
-    local dropdownFrame = UIDROPDOWNMENU_INIT_MENU;
+    local dropdownFrame = UIDROPDOWNMENU_OPEN_MENU or UIDROPDOWNMENU_INIT_MENU;
     local unit = dropdownFrame and dropdownFrame.unit;
 
     if (unit) then
