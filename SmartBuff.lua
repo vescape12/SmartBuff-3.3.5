@@ -90,6 +90,7 @@ local tStart = 0;
 local tStartZone = 0;
 local tTicker = 0;
 local tSync = 0;
+local tUnitsRefresh = 0;
 
 local sRealmName = nil;
 local sPlayerName = nil;
@@ -548,8 +549,9 @@ function SMARTBUFF_Ticker(force)
   if (force or GetTime() > tTicker + 1) then
     tTicker = GetTime();
        
-    if (isSetUnits) then
+    if (isSetUnits or tTicker > tUnitsRefresh + 15) then
       isSetUnits = false;
+      tUnitsRefresh = tTicker;
       SMARTBUFF_SetUnits();
       --SMARTBUFF_SyncBuffTimers();
       isSyncReq = true;
