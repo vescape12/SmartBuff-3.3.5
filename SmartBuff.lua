@@ -549,7 +549,7 @@ function SMARTBUFF_Ticker(force)
   if (force or GetTime() > tTicker + 1) then
     tTicker = GetTime();
        
-    if (isSetUnits or tTicker > tUnitsRefresh + 15) then
+    if (isSetUnits or tTicker > tUnitsRefresh + 2) then
       isSetUnits = false;
       tUnitsRefresh = tTicker;
       SMARTBUFF_SetUnits();
