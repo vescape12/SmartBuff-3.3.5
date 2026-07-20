@@ -222,6 +222,7 @@ SMARTBUFF_cBuffs = cBuffs
 -- SMARTBUFF_OnLoad
 function SMARTBUFF_OnLoad(self)
   self:RegisterEvent("ADDON_LOADED");
+  self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
   self:RegisterEvent("PLAYER_ENTERING_WORLD");
   self:RegisterEvent("UNIT_NAME_UPDATE");
   
@@ -302,7 +303,12 @@ function SMARTBUFF_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5)
   
   if (event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE") then
     isSetUnits = true;
-    
+
+  elseif (event == "GET_ITEM_INFO_RECEIVED" and arg2 and SMARTBUFF_PendingItemInfo) then
+    SMARTBUFF_PendingItemInfo = false;
+    SMARTBUFF_AddMsgD("Item info received, rebuilding buff list");
+    SMARTBUFF_SetBuffs();
+
   elseif (event == "PLAYER_REGEN_DISABLED") then
     SMARTBUFF_Ticker(true);
     
