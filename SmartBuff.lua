@@ -1013,12 +1013,13 @@ function SMARTBUFF_SetBuff(buff, i)
   if (cBuffs[i].IDS) then
     cBuffs[i].IconS = GetSpellTexture(cBuffs[i].IDS, SMARTBUFF_BOOK_TYPE_SPELL);
   else
-    local bag, slot, count, texture = SMARTBUFF_FindReagent(cBuffs[i].BuffS);
-    if (count == 0) then
-      cBuffs[i] = nil;
-      return i;
-    end    
-    cBuffs[i].IconS = texture;
+    -- Item-based buff (food/scroll/potion/weapon stone/firestone/etc.): fetch the icon from
+    -- item data, which is available whether or not we're currently carrying the item.
+    -- Whether we actually have one right now is re-checked every time this buff is
+    -- considered for casting (see SMARTBUFF_CountReagent), so we must NOT drop the entry
+    -- here just because bags are momentarily empty - that would remove it permanently for
+    -- the rest of the session, even after picking one up later.
+    cBuffs[i].IconS = GetItemIcon(cBuffs[i].BuffS);
   end
   
   SMARTBUFF_AddMsgD("Add "..buff[1]);
