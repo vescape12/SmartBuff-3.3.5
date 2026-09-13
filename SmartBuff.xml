@@ -2,12 +2,6 @@
 ..\FrameXML\UI.xsd">
   <Script file="SmartBuff.globals.lua"/>
   <Script file="localization.en.lua"/>
-  <Script file="localization.de.lua"/>
-  <Script file="localization.fr.lua"/>
-  <Script file="localization.es.lua"/>
-  <Script file="localization.ru.lua"/>
-  <Script file="localization.tw.lua"/>
-  <Script file="localization.cn.lua"/>
   <Script file="SmartBuff.buffs.lua"/>
 	<Script file="SmartBuff.lua"/>
   <Script file="SmartBuff.blessings.lua"/>

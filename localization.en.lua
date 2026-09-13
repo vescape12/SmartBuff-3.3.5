@@ -194,6 +194,7 @@ SMARTBUFF_MSG_CHAT           = "not possible in chat mode!";
 SMARTBUFF_MSG_SHAPESHIFT     = "Casting is not allowed in shapeshift form!";
 SMARTBUFF_MSG_NOACTIONSLOT   = "needs a slot on an action bar to work properly!";
 SMARTBUFF_MSG_GROUP          = "Group";
+SMARTBUFF_MSG_SWITCHTEMPLATE = "SmartBuff: Switched template";
 SMARTBUFF_MSG_NEEDS          = "needs";
 SMARTBUFF_MSG_OOM            = "Not enough mana/rage/energy!";
 SMARTBUFF_MSG_STOCK          = "Current stock of";

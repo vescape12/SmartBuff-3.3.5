@@ -672,7 +672,7 @@ function SMARTBUFF_SetUnits()
     end
     local tmp = SMARTBUFF_TEMPLATES[iGroupSetup];
     if (O.AutoSwitchTemplate and currentTemplate ~= tmp and iBFA == 0) then
-      SMARTBUFF_AddMsg(SMARTBUFF_OFT_AUTOSWITCHTMP .. ": " .. currentTemplate .. " -> " .. tmp); 
+      SMARTBUFF_AddMsg(SMARTBUFF_MSG_SWITCHTEMPLATE .. " -> " .. tmp); 
       currentTemplate = tmp;
       SMARTBUFF_SetBuffs();
     end
