@@ -35,6 +35,7 @@ SMARTBUFF_BEAST     = "B\195\170te";
 SMARTBUFF_ELEMENTAL = "\195\137l\195\169mentaire";
 SMARTBUFF_DEMONTYPE = "Diablotin";
 SMARTBUFF_UNDEAD    = "Mort-vivant";
+SMARTBUFF_SPIRITWOLF = "Loup d'esprit"; -- best-effort translation, please verify in-game
 
 -- Classes
 SMARTBUFF_CLASSES = {"Druide", "Chasseur", "Mage", "Paladin", "Pr\195\170tre", "Voleur", "Chaman", "D\195\169moniste", "Guerrier", "Chevalier de la mort", "Chasseur Pet", "D\195\169moniste Pet", "Chevalier de la mort Pet"};

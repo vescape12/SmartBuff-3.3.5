@@ -222,6 +222,7 @@ SMARTBUFF_cBuffs = cBuffs
 -- SMARTBUFF_OnLoad
 function SMARTBUFF_OnLoad(self)
   self:RegisterEvent("ADDON_LOADED");
+  self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
   self:RegisterEvent("PLAYER_ENTERING_WORLD");
   self:RegisterEvent("UNIT_NAME_UPDATE");
   
@@ -302,7 +303,12 @@ function SMARTBUFF_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5)
   
   if (event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE") then
     isSetUnits = true;
-    
+
+  elseif (event == "GET_ITEM_INFO_RECEIVED" and arg2 and SMARTBUFF_PendingItemInfo) then
+    SMARTBUFF_PendingItemInfo = false;
+    SMARTBUFF_AddMsgD("Item info received, rebuilding buff list");
+    SMARTBUFF_SetBuffs();
+
   elseif (event == "PLAYER_REGEN_DISABLED") then
     SMARTBUFF_Ticker(true);
     
@@ -1007,12 +1013,13 @@ function SMARTBUFF_SetBuff(buff, i)
   if (cBuffs[i].IDS) then
     cBuffs[i].IconS = GetSpellTexture(cBuffs[i].IDS, SMARTBUFF_BOOK_TYPE_SPELL);
   else
-    local bag, slot, count, texture = SMARTBUFF_FindReagent(cBuffs[i].BuffS);
-    if (count == 0) then
-      cBuffs[i] = nil;
-      return i;
-    end    
-    cBuffs[i].IconS = texture;
+    -- Item-based buff (food/scroll/potion/weapon stone/firestone/etc.): fetch the icon from
+    -- item data, which is available whether or not we're currently carrying the item.
+    -- Whether we actually have one right now is re-checked every time this buff is
+    -- considered for casting (see SMARTBUFF_CountReagent), so we must NOT drop the entry
+    -- here just because bags are momentarily empty - that would remove it permanently for
+    -- the rest of the session, even after picking one up later.
+    cBuffs[i].IconS = GetItemIcon(cBuffs[i].BuffS);
   end
   
   SMARTBUFF_AddMsgD("Add "..buff[1]);
@@ -1879,6 +1886,7 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
   
   if (UnitExists(unit) and UnitIsFriend("player", unit) and not UnitIsDeadOrGhost(unit) and not UnitIsCorpse(unit)
     and UnitIsConnected(unit) and UnitIsVisible(unit) and not UnitOnTaxi(unit) and not cBlacklist[UnitName(unit)]
+    and UnitName(unit) ~= SMARTBUFF_SPIRITWOLF
     and ((UnitIsPVP(unit) == nil and (not isPvP or O.BuffPvP)) or (UnitIsPVP(unit) and (isPvP or O.BuffPvP)))) then
     --and not SmartBuff_UnitIsIgnored(unit)
     
@@ -2115,7 +2123,7 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                 local offH,_,_ = SmartBuffTooltip:SetInventoryItem("player", 17);
                 bMh, tMh, cMh, bOh, tOh, cOh = GetWeaponEnchantInfo();
                 
-                --SMARTBUFF_AddMsgD("Check weapon Buff");
+                SMARTBUFF_AddMsgD("Check weapon buff " .. buffnS .. ": MH=" .. tostring(bs.MH) .. " OH=" .. tostring(bs.OH) .. " mainH item present=" .. tostring(mainH ~= nil) .. " currentEnchantMH=" .. tostring(bMh));
                 
                 if (bs.MH) then
                   if (mainH and SMARTBUFF_CanApplyWeaponBuff(buffnS, 16)) then
@@ -2125,7 +2133,7 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                         charges = cMh;
                         if (charges == nil) then charges = -1; end
                         if (charges > 1) then cBuffs[i].CanCharge = true; end
-                        --SMARTBUFF_AddMsgD(un .. " (WMH): " .. buffnS .. string.format(" %.0f sec left", tMh) .. ", " .. charges .. " charges left");
+                        SMARTBUFF_AddMsgD(un .. " (WMH): " .. buffnS .. string.format(" %.0f sec left", tMh) .. ", " .. charges .. " charges left");
                         if (tMh <= rbTime or (O.CheckCharges and cBuffs[i].CanCharge and charges > 0 and charges <= O.MinCharges)) then
                           buff = buffnS;
                           bt = tMh;
@@ -2135,9 +2143,10 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                     else
                       handtype = "main";
                       buff = buffnS;
+                      SMARTBUFF_AddMsgD(buffnS .. ": no weapon enchant currently present, flagged as missing");
                     end
                   else
-                    --SMARTBUFF_AddMsgD("Weapon Buff cannot be cast, no mainhand weapon equipped or wrong weapon/stone type");
+                    SMARTBUFF_AddMsgD(buffnS .. ": cannot be applied - mainH=" .. tostring(mainH ~= nil) .. ", CanApplyWeaponBuff=" .. tostring(mainH and SMARTBUFF_CanApplyWeaponBuff(buffnS, 16)));
                   end
                 end
                 
@@ -2168,9 +2177,9 @@ function SMARTBUFF_BuffUnit(unit, subgroup, mode, spell)
                 if (buff and cBuffs[i].Type == SMARTBUFF_CONST_INV) then
                   local cr = SMARTBUFF_CountReagent(buffnS);
                   if (cr > 0) then
-                    --SMARTBUFF_AddMsgD(cr .. " " .. buffnS .. " found");
+                    SMARTBUFF_AddMsgD(cr .. " " .. buffnS .. " found in bags");
                   else
-                    --SMARTBUFF_AddMsgD("No " .. buffnS .. " found");
+                    SMARTBUFF_AddMsgD("No " .. buffnS .. " found in bags (CountReagent returned 0) - buff will NOT be flagged as missing");
                     buff = nil;
                   end
                 end                

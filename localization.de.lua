@@ -33,6 +33,7 @@ SMARTBUFF_BEAST     = "Wildtier";
 SMARTBUFF_ELEMENTAL = "Elementar";
 SMARTBUFF_DEMONTYPE = "Wichtel";
 SMARTBUFF_UNDEAD    = "Untot";
+SMARTBUFF_SPIRITWOLF = "Geisterwolf"; -- best-effort translation, please verify in-game
 
 -- Classes
 SMARTBUFF_CLASSES = {"Druide", "J\195\164ger", "Magier", "Paladin", "Priester", "Schurke", "Schamane", "Hexenmeister", "Krieger", "Todesritter", "J\195\164ger Pet", "Hexer Pet", "Todesritter Pet"};

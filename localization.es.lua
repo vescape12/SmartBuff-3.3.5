@@ -34,6 +34,7 @@ SMARTBUFF_BEAST     = "Bestia";
 SMARTBUFF_ELEMENTAL = "Elemental";
 SMARTBUFF_DEMONTYPE = "Diablillo";
 SMARTBUFF_UNDEAD    = "No-muerto";
+SMARTBUFF_SPIRITWOLF = "Lobo espiritual"; -- best-effort translation, please verify in-game
 
 -- Classes
 SMARTBUFF_CLASSES = {"Druida", "Cazador", "Mago", "Palad\195\173n", "Sacerdote", "P\195\173caro", "Cham\195\161n", "Brujo", "Guerrero", "Caballero de la Muerte", "Mascota de cazador", "Mascota de brujo", "Mascota de caballero de la Muerte"};
